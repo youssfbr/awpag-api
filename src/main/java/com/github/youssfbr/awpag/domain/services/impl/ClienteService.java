@@ -3,6 +3,7 @@ package com.github.youssfbr.awpag.domain.services.impl;
 import com.github.youssfbr.awpag.api.dtos.ClienteResponseDTO;
 import com.github.youssfbr.awpag.domain.repositories.IClienteRepository;
 import com.github.youssfbr.awpag.domain.services.IClienteService;
+import com.github.youssfbr.awpag.domain.services.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,9 +29,13 @@ public class ClienteService implements IClienteService {
     @Override
     @Transactional(readOnly = true)
     public ClienteResponseDTO buscar(Long clienteId) {
+         return getClienteById(clienteId);
+    }
+
+    private ClienteResponseDTO getClienteById(Long clienteId) {
         return clienteRepository
                 .findById(clienteId)
                 .map(ClienteResponseDTO::new)
-                .orElseThrow(() -> new RuntimeException(CLIENTE_NAO_EXISTE_COM_ID + clienteId));
+                .orElseThrow(() -> new ResourceNotFoundException(CLIENTE_NAO_EXISTE_COM_ID + clienteId));
     }
 }
