@@ -14,10 +14,19 @@ import java.util.List;
 public class ClienteService implements IClienteService {
 
     private final IClienteRepository clienteRepository;
+    public static final String CLIENTE_NAO_EXISTE_COM_ID = "Cliente não existe com Id ";
 
     @Override
     @Transactional(readOnly = true)
     public List<Cliente> listar() {
         return clienteRepository.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Cliente buscar(Long clienteId) {
+        return clienteRepository
+                .findById(clienteId)
+                .orElseThrow(() -> new RuntimeException(CLIENTE_NAO_EXISTE_COM_ID + clienteId));
     }
 }

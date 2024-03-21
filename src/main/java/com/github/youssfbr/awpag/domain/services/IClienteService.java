@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface IClienteService {
     List<Cliente> listar();
+    Cliente buscar(Long clienteId);
 }
