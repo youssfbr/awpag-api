@@ -1,6 +1,6 @@
 package com.github.youssfbr.awpag.api.controllers;
 
-import com.github.youssfbr.awpag.domain.models.Cliente;
+import com.github.youssfbr.awpag.api.dtos.ClienteResponseDTO;
 import com.github.youssfbr.awpag.domain.services.IClienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +19,12 @@ public class ClienteController {
     private final IClienteService clienteService;
 
     @GetMapping
-    public ResponseEntity<List<Cliente>> listar() {
+    public ResponseEntity<List<ClienteResponseDTO>> listar() {
         return ResponseEntity.ok(clienteService.listar());
     }
 
     @GetMapping("/{clienteId}")
-    public ResponseEntity<Cliente> buscar(@PathVariable Long clienteId) {
+    public ResponseEntity<ClienteResponseDTO> buscar(@PathVariable Long clienteId) {
         return ResponseEntity.ok(clienteService.buscar(clienteId));
     }
 

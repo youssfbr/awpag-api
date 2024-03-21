@@ -1,6 +1,6 @@
 package com.github.youssfbr.awpag.domain.services.impl;
 
-import com.github.youssfbr.awpag.domain.models.Cliente;
+import com.github.youssfbr.awpag.api.dtos.ClienteResponseDTO;
 import com.github.youssfbr.awpag.domain.repositories.IClienteRepository;
 import com.github.youssfbr.awpag.domain.services.IClienteService;
 import lombok.RequiredArgsConstructor;
@@ -18,15 +18,19 @@ public class ClienteService implements IClienteService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Cliente> listar() {
-        return clienteRepository.findAll();
+    public List<ClienteResponseDTO> listar() {
+        return clienteRepository.findAll()
+                .stream()
+                .map(ClienteResponseDTO::new)
+                .toList();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Cliente buscar(Long clienteId) {
+    public ClienteResponseDTO buscar(Long clienteId) {
         return clienteRepository
                 .findById(clienteId)
+                .map(ClienteResponseDTO::new)
                 .orElseThrow(() -> new RuntimeException(CLIENTE_NAO_EXISTE_COM_ID + clienteId));
     }
 }
