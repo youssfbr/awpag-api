@@ -1,14 +1,14 @@
 package com.github.youssfbr.awpag.api.controllers;
 
+import com.github.youssfbr.awpag.api.dtos.ClienteRequestDTO;
 import com.github.youssfbr.awpag.api.dtos.ClienteResponseDTO;
 import com.github.youssfbr.awpag.domain.services.IClienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -26,6 +26,17 @@ public class ClienteController {
     @GetMapping("/{clienteId}")
     public ResponseEntity<ClienteResponseDTO> buscar(@PathVariable Long clienteId) {
         return ResponseEntity.ok(clienteService.buscar(clienteId));
+    }
+
+    @PostMapping
+    public ResponseEntity<ClienteResponseDTO> buscar(@RequestBody ClienteRequestDTO dto) {
+
+        final ClienteResponseDTO clienteInseridoDTO = clienteService.inserir(dto);
+
+        final URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(clienteInseridoDTO.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(clienteInseridoDTO);
     }
 
 }
