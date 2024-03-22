@@ -1,11 +1,13 @@
 package com.github.youssfbr.awpag.api.dtos;
 
 import com.github.youssfbr.awpag.domain.models.Cliente;
+import com.github.youssfbr.awpag.domain.services.validations.UserInsertValid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
+@UserInsertValid
 public class ClienteRequestDTO {
 
     @NotBlank(message = "Campo obrigatório")
