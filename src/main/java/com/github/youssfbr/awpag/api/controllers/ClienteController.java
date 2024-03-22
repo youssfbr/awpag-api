@@ -3,6 +3,7 @@ package com.github.youssfbr.awpag.api.controllers;
 import com.github.youssfbr.awpag.api.dtos.ClienteRequestDTO;
 import com.github.youssfbr.awpag.api.dtos.ClienteResponseDTO;
 import com.github.youssfbr.awpag.domain.services.IClienteService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<ClienteResponseDTO> buscar(@RequestBody ClienteRequestDTO dto) {
+    public ResponseEntity<ClienteResponseDTO> buscar(@Valid @RequestBody ClienteRequestDTO dto) {
 
         final ClienteResponseDTO clienteInseridoDTO = clienteService.inserir(dto);
 

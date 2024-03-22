@@ -1,13 +1,19 @@
 package com.github.youssfbr.awpag.api.dtos;
 
 import com.github.youssfbr.awpag.domain.models.Cliente;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
 public class ClienteRequestDTO {
 
+    @NotBlank(message = "Campo obrigatório")
     private String nome;
+
+    @Email(message = "Favor entrar com e-mail válido")
     private String email;
+
     private String telefone;
 
     public ClienteRequestDTO() { }
