@@ -17,12 +17,12 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 60, nullable = false)
+    @Column(length = 60 , nullable = false)
     private String nome;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true , nullable = false)
     private String email;
 
-    @Column(name = "fone")
+    @Column(length = 20 , name = "fone" , nullable = false)
     private String telefone;
 }

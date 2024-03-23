@@ -17,7 +17,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdateValid, ClienteUpdateDTO> {
 
-    private final IClienteRepository repository;
+    private final IClienteRepository clienteRepository;
     private final HttpServletRequest request;
 
     @Override
@@ -29,11 +29,21 @@ public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate
 
         final List<FieldMessage> list = new ArrayList<>();
 
-        final Cliente cliente = repository.findByEmail(dto.getEmail());
+        final Cliente cliente = clienteRepository.findByEmail(dto.getEmail());
 
         if (cliente != null && clienteId != cliente.getId()) {
             list.add(new FieldMessage("email", "e-mail já existe"));
         }
+
+//        final Optional<Cliente> cliente = clienteRepository.findByEmail(dto.getEmail());
+//
+//        final boolean emailEmUso = clienteRepository.findByEmail(dto.getEmail())
+//                .filter(c -> !c.equals(cliente))
+//                .isPresent();
+//
+//        if (emailEmUso && clienteId != cliente.get().getId()) {
+//            list.add(new FieldMessage("email" , "Já existe um cliente cadastro com esse e-mail"));
+//        }
 
         for (FieldMessage e : list) {
             context.disableDefaultConstraintViolation();

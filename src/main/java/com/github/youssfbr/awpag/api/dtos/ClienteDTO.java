@@ -3,6 +3,8 @@ package com.github.youssfbr.awpag.api.dtos;
 import com.github.youssfbr.awpag.domain.models.Cliente;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Getter
@@ -11,11 +13,15 @@ public class ClienteDTO {
     private Long id;
 
     @NotBlank(message = "Campo obrigatório")
+    @Size(max = 60 , message = "No máximo 60 caracteres")
     private String nome;
 
+    @NotNull(message = "Campo obrigatório")
     @Email(message = "Favor entrar com e-mail válido")
     private String email;
 
+    @NotNull(message = "Campo obrigatório")
+    @Size(max = 20 , message = "No máximo 20 caracteres")
     private String telefone;
 
     public ClienteDTO() { }

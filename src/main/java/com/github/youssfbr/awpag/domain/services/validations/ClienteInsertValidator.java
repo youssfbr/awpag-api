@@ -14,17 +14,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsertValid, ClienteInsertDTO> {
 
-    private final IClienteRepository repository;
+    private final IClienteRepository clienteRepository;
     @Override
     public boolean isValid(ClienteInsertDTO dto , ConstraintValidatorContext context) {
 
         final List<FieldMessage> list = new ArrayList<>();
 
-        final Cliente cliente = repository.findByEmail(dto.getEmail());
+        final Cliente cliente = clienteRepository.findByEmail(dto.getEmail());
 
         if (cliente != null) {
-            list.add(new FieldMessage("email", "e-mail já existe"));
+            list.add(new FieldMessage("email", "Já existe um cliente cadastro com esse e-mail"));
         }
+
+//        final boolean emailEmUso = clienteRepository.findByEmail(dto.getEmail()).isPresent();
+//
+//        if (emailEmUso) {
+//            list.add(new FieldMessage("email" , "Já existe um cliente cadastro com esse e-mail"));
+//        }
 
         for (FieldMessage e : list) {
             context.disableDefaultConstraintViolation();
