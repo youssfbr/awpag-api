@@ -50,6 +50,7 @@ public class ClienteService implements IClienteService {
     }
 
     @Override
+    @Transactional
     public ClienteResponseDTO atualizar(Long clienteId , ClienteUpdateDTO dto) {
 
         final Cliente clienteASerAtualizado = getClienteById(clienteId);
@@ -59,6 +60,12 @@ public class ClienteService implements IClienteService {
 
         final Cliente clienteAtualizado = clienteRepository.save(clienteASerAtualizado);
         return new ClienteResponseDTO(clienteAtualizado);
+    }
+
+    @Override
+    public void deletar(Long clienteId) {
+        getClienteById(clienteId);
+        clienteRepository.deleteById(clienteId);
     }
 
     private Cliente getClienteById(Long clienteId) {

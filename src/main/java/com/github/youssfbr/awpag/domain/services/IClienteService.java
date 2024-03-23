@@ -11,4 +11,5 @@ public interface IClienteService {
     ClienteResponseDTO buscar(Long clienteId);
     ClienteResponseDTO inserir(ClienteInsertDTO dto);
     ClienteResponseDTO atualizar(Long clienteId , ClienteUpdateDTO dto);
+    void deletar(Long clienteId);
 }
