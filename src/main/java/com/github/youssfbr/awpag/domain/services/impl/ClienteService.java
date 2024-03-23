@@ -1,7 +1,8 @@
 package com.github.youssfbr.awpag.domain.services.impl;
 
-import com.github.youssfbr.awpag.api.dtos.ClienteRequestDTO;
+import com.github.youssfbr.awpag.api.dtos.ClienteInsertDTO;
 import com.github.youssfbr.awpag.api.dtos.ClienteResponseDTO;
+import com.github.youssfbr.awpag.api.dtos.ClienteUpdateDTO;
 import com.github.youssfbr.awpag.domain.models.Cliente;
 import com.github.youssfbr.awpag.domain.repositories.IClienteRepository;
 import com.github.youssfbr.awpag.domain.services.IClienteService;
@@ -32,30 +33,41 @@ public class ClienteService implements IClienteService {
     @Override
     @Transactional(readOnly = true)
     public ClienteResponseDTO buscar(Long clienteId) {
-         return getClienteById(clienteId);
+        return new ClienteResponseDTO(getClienteById(clienteId));
     }
 
     @Override
     @Transactional
-    public ClienteResponseDTO inserir(ClienteRequestDTO dto) {
+    public ClienteResponseDTO inserir(ClienteInsertDTO dto) {
 
-        final Cliente cliente = new Cliente();
+        final Cliente clienteASerSalvo = new Cliente();
 
-        copyDtoToEntity(dto , cliente);
+        copyDtoToEntity(dto , clienteASerSalvo);
 
-        final Cliente clienteSalvo = clienteRepository.save(cliente);
+        final Cliente clienteSalvo = clienteRepository.save(clienteASerSalvo);
 
         return new ClienteResponseDTO(clienteSalvo);
     }
 
-    private ClienteResponseDTO getClienteById(Long clienteId) {
+    @Override
+    public ClienteResponseDTO atualizar(Long clienteId , ClienteUpdateDTO dto) {
+
+        final Cliente clienteASerAtualizado = getClienteById(clienteId);
+
+        copyDtoToEntity(dto , clienteASerAtualizado);
+        clienteASerAtualizado.setId(clienteId);
+
+        final Cliente clienteAtualizado = clienteRepository.save(clienteASerAtualizado);
+        return new ClienteResponseDTO(clienteAtualizado);
+    }
+
+    private Cliente getClienteById(Long clienteId) {
         return clienteRepository
                 .findById(clienteId)
-                .map(ClienteResponseDTO::new)
                 .orElseThrow(() -> new ResourceNotFoundException(CLIENTE_NAO_EXISTE_COM_ID + clienteId));
     }
 
-    private void copyDtoToEntity(ClienteRequestDTO dto , Cliente entity) {
+    private void copyDtoToEntity(Object dto , Cliente entity) {
         BeanUtils.copyProperties(dto , entity);
     }
 }

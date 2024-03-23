@@ -1,7 +1,8 @@
 package com.github.youssfbr.awpag.api.controllers;
 
-import com.github.youssfbr.awpag.api.dtos.ClienteRequestDTO;
+import com.github.youssfbr.awpag.api.dtos.ClienteInsertDTO;
 import com.github.youssfbr.awpag.api.dtos.ClienteResponseDTO;
+import com.github.youssfbr.awpag.api.dtos.ClienteUpdateDTO;
 import com.github.youssfbr.awpag.domain.services.IClienteService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<ClienteResponseDTO> buscar(@Valid @RequestBody ClienteRequestDTO dto) {
+    public ResponseEntity<ClienteResponseDTO> buscar(@Valid @RequestBody ClienteInsertDTO dto) {
 
         final ClienteResponseDTO clienteInseridoDTO = clienteService.inserir(dto);
 
@@ -38,6 +39,11 @@ public class ClienteController {
                 .buildAndExpand(clienteInseridoDTO.getId()).toUri();
 
         return ResponseEntity.created(uri).body(clienteInseridoDTO);
+    }
+
+    @PutMapping("/{clienteId}")
+    public ResponseEntity<ClienteResponseDTO> update(@PathVariable Long clienteId , @Valid @RequestBody ClienteUpdateDTO dto) {
+        return ResponseEntity.ok(clienteService.atualizar(clienteId , dto));
     }
 
 }

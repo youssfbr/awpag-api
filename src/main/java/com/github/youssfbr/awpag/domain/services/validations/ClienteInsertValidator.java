@@ -1,7 +1,7 @@
 package com.github.youssfbr.awpag.domain.services.validations;
 
 import com.github.youssfbr.awpag.api.controllers.exceptions.FieldMessage;
-import com.github.youssfbr.awpag.api.dtos.ClienteRequestDTO;
+import com.github.youssfbr.awpag.api.dtos.ClienteInsertDTO;
 import com.github.youssfbr.awpag.domain.models.Cliente;
 import com.github.youssfbr.awpag.domain.repositories.IClienteRepository;
 import jakarta.validation.ConstraintValidator;
@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class UserInsertValidator implements ConstraintValidator<UserInsertValid, ClienteRequestDTO> {
+public class ClienteInsertValidator implements ConstraintValidator<ClienteInsertValid, ClienteInsertDTO> {
 
     private final IClienteRepository repository;
     @Override
-    public boolean isValid(ClienteRequestDTO dto , ConstraintValidatorContext context) {
+    public boolean isValid(ClienteInsertDTO dto , ConstraintValidatorContext context) {
 
         final List<FieldMessage> list = new ArrayList<>();
 
@@ -36,7 +36,7 @@ public class UserInsertValidator implements ConstraintValidator<UserInsertValid,
     }
 
     @Override
-    public void initialize(UserInsertValid constraintAnnotation) {
+    public void initialize(ClienteInsertValid constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 }

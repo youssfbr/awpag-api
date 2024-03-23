@@ -6,8 +6,9 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
-//@UserInsertValid
-public class ClienteRequestDTO {
+public class ClienteDTO {
+
+    private Long id;
 
     @NotBlank(message = "Campo obrigatório")
     private String nome;
@@ -17,15 +18,17 @@ public class ClienteRequestDTO {
 
     private String telefone;
 
-    public ClienteRequestDTO() { }
+    public ClienteDTO() { }
 
-    public ClienteRequestDTO(String nome , String email , String telefone) {
+    public ClienteDTO(Long id , String nome , String email , String telefone) {
+        this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
     }
 
-    public ClienteRequestDTO(Cliente entity) {
+    public ClienteDTO(Cliente entity) {
+        id = entity.getId();
         nome = entity.getNome();
         email = entity.getEmail();
         telefone = entity.getTelefone();
