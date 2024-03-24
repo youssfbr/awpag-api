@@ -1,5 +1,6 @@
 package com.github.youssfbr.awpag.api.controllers.exceptions;
 
+import com.github.youssfbr.awpag.domain.services.exceptions.DatabaseException;
 import com.github.youssfbr.awpag.domain.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.time.Instant;
 @ControllerAdvice
 public class ResourceExceptionHandler {
 	private static final  HttpStatus notFound = HttpStatus.NOT_FOUND;
+	private static final HttpStatus badRequest = HttpStatus.BAD_REQUEST;
 	private static final HttpStatus unprocessableEntity = HttpStatus.UNPROCESSABLE_ENTITY;
 
 	@ExceptionHandler(ResourceNotFoundException.class)
@@ -26,6 +28,30 @@ public class ResourceExceptionHandler {
 		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
 		return ResponseEntity.status(notFound).body(err);
+	}
+
+	@ExceptionHandler(DatabaseException.class)
+	public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request) {
+
+		StandardError err = new StandardError();
+		err.setTimestamp(Instant.now());
+		err.setStatus(badRequest.value());
+		err.setError("Database exception");
+		err.setMessage(e.getMessage());
+		err.setPath(request.getRequestURI());
+		return ResponseEntity.status(badRequest).body(err);
+	}
+
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<StandardError> database(IllegalArgumentException e, HttpServletRequest request) {
+
+		StandardError err = new StandardError();
+		err.setTimestamp(Instant.now());
+		err.setStatus(badRequest.value());
+		err.setError("Argumento inválido");
+		err.setMessage(e.getMessage());
+		err.setPath(request.getRequestURI());
+		return ResponseEntity.status(badRequest).body(err);
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)

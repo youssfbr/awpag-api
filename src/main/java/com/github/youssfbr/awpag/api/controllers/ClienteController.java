@@ -31,7 +31,7 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<ClienteResponseDTO> buscar(@Valid @RequestBody ClienteInsertDTO dto) {
+    public ResponseEntity<ClienteResponseDTO> criar(@Valid @RequestBody ClienteInsertDTO dto) {
 
         final ClienteResponseDTO clienteInseridoDTO = clienteService.inserir(dto);
 

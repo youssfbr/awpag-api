@@ -21,7 +21,8 @@ public class Parcelamento {
     private Long id;
 
     @ManyToOne
-    @Column(nullable = false)
+    //@Column(nullable = false)
+    //@JoinColumn
     private Cliente cliente;
 
     @Column(length = 60 , nullable = false)

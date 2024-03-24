@@ -68,6 +68,12 @@ public class ClienteService implements IClienteService {
         clienteRepository.deleteById(clienteId);
     }
 
+    @Transactional(readOnly = true)
+    public Cliente buscarCliente(Long clientId) {
+        return (clientId == null) ? null : clienteRepository.findById(clientId)
+                .orElseThrow(() -> new IllegalArgumentException(CLIENTE_NAO_EXISTE_COM_ID + clientId));
+    }
+
     private Cliente getClienteById(Long clienteId) {
         return clienteRepository
                 .findById(clienteId)
