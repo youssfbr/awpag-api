@@ -25,7 +25,8 @@ public class ParcelamentoService implements IParcelamentoService {
 
     // private final IClienteRepository clienteRepository;
 
-    private static final String CLIENTE_NAO_EXISTE_COM_ID = "Cliente não existe com Id ";
+    // private static final String CLIENTE_NAO_EXISTE_COM_ID = "Cliente não existe com Id ";
+
     private static final String PARCELAMENTO_NAO_EXISTE_COM_ID = "Parcelamento não existe com Id ";
     private static final String PARCELAMENTO_INVALIDO = "Parcelamento a ser criado não deve possuir um código";
 
@@ -49,13 +50,16 @@ public class ParcelamentoService implements IParcelamentoService {
     @Transactional
     public ParcelamentoResponseDTO inserir(ParcelamentoRequestCreateDTO dto) {
 
-        if (dto.getId() != null) {
-            throw new IllegalArgumentException(PARCELAMENTO_INVALIDO);
-        }
+        if (dto.getId() != null) throw new IllegalArgumentException(PARCELAMENTO_INVALIDO);
 
         final Parcelamento parcelamentoASerSalvo = new Parcelamento();
 
-        copyDtoToEntity(dto , parcelamentoASerSalvo);
+        BeanUtils.copyProperties(dto , parcelamentoASerSalvo);
+
+        final Long clientId = dto.getCliente().getId();
+        final Cliente cliente = clienteService.buscarCliente(clientId);
+
+        parcelamentoASerSalvo.setCliente(cliente);
         parcelamentoASerSalvo.setDataCriacao(LocalDateTime.now());
 
         final Parcelamento parcelamentoSalvo = parcelamentoRepository.save(parcelamentoASerSalvo);
@@ -67,19 +71,6 @@ public class ParcelamentoService implements IParcelamentoService {
         return parcelamentoRepository
                 .findById(parcelamentoId)
                 .orElseThrow(() -> new ResourceNotFoundException(PARCELAMENTO_NAO_EXISTE_COM_ID + parcelamentoId));
-    }
-
-    private void copyDtoToEntity(Object dto , Parcelamento entity) {
-
-        BeanUtils.copyProperties(dto , entity);
-
-        final Long clientId = entity.getCliente().getId();
-
-        final Cliente cliente = clienteService.buscarCliente(clientId);
-
-       // final Cliente cliente = getCliente(clientId);
-
-        entity.setCliente(cliente);
     }
 
 //    private Cliente getCliente(Long clientId) {

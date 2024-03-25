@@ -70,7 +70,7 @@ public class ClienteService implements IClienteService {
 
     @Transactional(readOnly = true)
     public Cliente buscarCliente(Long clientId) {
-        return (clientId == null) ? null : clienteRepository.findById(clientId)
+        return clienteRepository.findById(clientId) // (clientId == null) ? null :
                 .orElseThrow(() -> new IllegalArgumentException(CLIENTE_NAO_EXISTE_COM_ID + clientId));
     }
 

@@ -1,15 +1,19 @@
 package com.github.youssfbr.awpag.api.dtos;
 
 import com.github.youssfbr.awpag.domain.models.Cliente;
+import com.github.youssfbr.awpag.domain.services.validations.ValidationGroups;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class ClienteDTO {
 
+    @NotNull(groups = ValidationGroups.ClienteDTOId.class)
     private Long id;
 
     @NotBlank(message = "Campo obrigatório")
