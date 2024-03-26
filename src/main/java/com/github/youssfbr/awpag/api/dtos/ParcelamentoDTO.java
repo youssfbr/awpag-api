@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Getter
 @Setter
@@ -39,9 +39,10 @@ public class ParcelamentoDTO {
     @Max(12)
     private Integer quantidadeParcelas;
 
-    private LocalDateTime dataCriacao;
+    private OffsetDateTime dataCriacao;
+    //private LocalDateTime dataCriacao;
 
-    public ParcelamentoDTO(Long id , Cliente cliente , String descricao , BigDecimal valorTotal , Integer quantidadeParcelas , LocalDateTime dataCriacao) {
+    public ParcelamentoDTO(Long id , Cliente cliente , String descricao , BigDecimal valorTotal , Integer quantidadeParcelas , OffsetDateTime dataCriacao) {
         this.id = id;
         this.cliente = new ClienteDTO(cliente);
         this.descricao = descricao;

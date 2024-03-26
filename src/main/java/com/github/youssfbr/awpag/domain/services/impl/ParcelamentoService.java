@@ -12,7 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -28,7 +28,8 @@ public class ParcelamentoService implements IParcelamentoService {
     // private static final String CLIENTE_NAO_EXISTE_COM_ID = "Cliente não existe com Id ";
 
     private static final String PARCELAMENTO_NAO_EXISTE_COM_ID = "Parcelamento não existe com Id ";
-    private static final String PARCELAMENTO_INVALIDO = "Parcelamento a ser criado não deve possuir um código";
+    private static final String PARCELAMENTO_INVALIDO_ID = "Parcelamento a ser criado não deve possuir um código";
+    private static final String PARCELAMENTO_INVALIDO_DATA = "Parcelamento a ser criado não deve possuir data";
 
     @Override
     @Transactional(readOnly = true)
@@ -50,7 +51,8 @@ public class ParcelamentoService implements IParcelamentoService {
     @Transactional
     public ParcelamentoResponseDTO inserir(ParcelamentoRequestCreateDTO dto) {
 
-        if (dto.getId() != null) throw new IllegalArgumentException(PARCELAMENTO_INVALIDO);
+        if (dto.getId() != null) throw new IllegalArgumentException(PARCELAMENTO_INVALIDO_ID);
+        if (dto.getDataCriacao() != null) throw new IllegalArgumentException(PARCELAMENTO_INVALIDO_DATA);
 
         final Parcelamento parcelamentoASerSalvo = new Parcelamento();
 
@@ -60,7 +62,7 @@ public class ParcelamentoService implements IParcelamentoService {
         final Cliente cliente = clienteService.buscarCliente(clientId);
 
         parcelamentoASerSalvo.setCliente(cliente);
-        parcelamentoASerSalvo.setDataCriacao(LocalDateTime.now());
+        parcelamentoASerSalvo.setDataCriacao(OffsetDateTime.now());
 
         final Parcelamento parcelamentoSalvo = parcelamentoRepository.save(parcelamentoASerSalvo);
 

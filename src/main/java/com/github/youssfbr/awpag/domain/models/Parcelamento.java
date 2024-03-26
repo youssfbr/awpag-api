@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Entity
 @Getter
@@ -33,5 +33,8 @@ public class Parcelamento {
     private Integer quantidadeParcelas;
 
     @Column(nullable = false)
-    private LocalDateTime dataCriacao;
+    private OffsetDateTime dataCriacao;
+
+//    @Column(nullable = false)
+//    private LocalDateTime dataCriacao;
 }
