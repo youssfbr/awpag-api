@@ -22,21 +22,21 @@ public class ParcelamentoDTO {
     private Long id;
 
     @Valid
-    @NotNull(message = "é obrigatório")
+    @NotNull
     @ConvertGroup(from = Default.class , to = ValidationGroups.ClienteDTOId.class)
     private ClienteDTO cliente;
 
-    @NotBlank(message = "é obrigatório")
-    @Size(max = 60 , message = "tem que ter no máximo 60 caracteres")
+    @NotBlank
+    @Size(max = 60)
     private String descricao;
 
-    @NotNull(message = "é obrigatório")
-    @Positive(message = "deve ser positivo")
+    @NotNull
+    @Positive
     private BigDecimal valorTotal;
 
-    @NotNull(message = "é obrigatório")
-    @Positive(message = "deve ser positivo")
-    @Max(value = 12 , message = "deve ser até 12")
+    @NotNull
+    @Positive
+    @Max(12)
     private Integer quantidadeParcelas;
 
     private LocalDateTime dataCriacao;

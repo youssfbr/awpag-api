@@ -16,16 +16,16 @@ public class ClienteDTO {
     @NotNull(groups = ValidationGroups.ClienteDTOId.class)
     private Long id;
 
-    @NotBlank(message = "Campo obrigatório")
-    @Size(max = 60 , message = "No máximo 60 caracteres")
+    @NotBlank
+    @Size(max = 60)
     private String nome;
 
-    @NotBlank(message = "Campo obrigatório")
-    @Email(message = "Favor entrar com e-mail válido")
+    @Email
+    @NotBlank
     private String email;
 
-    @NotBlank(message = "Campo obrigatório")
-    @Size(max = 20 , message = "No máximo 20 caracteres")
+    @NotBlank
+    @Size(max = 20)
     private String telefone;
 
     public ClienteDTO() { }

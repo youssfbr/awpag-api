@@ -1,9 +1,11 @@
 package com.github.youssfbr.awpag.api.controllers.exceptions;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 
 public class StandardError implements Serializable {
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	private Instant timestamp;
